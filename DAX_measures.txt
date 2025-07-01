@@ -1,0 +1,31 @@
+Complete DAX Measures for Power BI Dashboard
+This file contains all the DAX (Data Analysis Expressions) measures created in Power BI to power the interactive dashboard. The table name inpatient_discharges is used in these examples.
+
+Core KPI Measures
+1. Calculates the total number of patient discharges.
+Total Discharges = COUNT('inpatient_discharges'[Facility Name])
+
+2. Calculates the average length of stay for all discharges.
+Avg. LOS = AVERAGE('inpatient_discharges'[Length of Stay])
+
+3. Calculates the sum of all hospital charges.
+Total Charges = SUM('inpatient_discharges'[Total Charges])
+
+4. Calculates the average charge per discharge.
+Avg. Charges = AVERAGE('inpatient_discharges'[Total Charges])
+
+5. Calculates the average cost per discharge.
+Avg. Costs = AVERAGE('inpatient_discharges'[Total Costs])
+
+Advanced & Contextual Measures
+6. Calculates the percentage of total admissions that were emergencies.
+This requires a helper measure first.
+
+-- Helper Measure
+Emergency Admissions = CALCULATE([Total Discharges], 'inpatient_discharges'[Type of Admission] = "Emergency")
+
+-- Final Measure
+% Emergency Admissions = DIVIDE([Emergency Admissions], [Total Discharges], 0)
+
+7. Creates a dynamic title that reflects the current hospital system selection.
+Selected System = SELECTEDVALUE('inpatient_discharges'[hospital_system], "All Hospital Systems")
