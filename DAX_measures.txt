@@ -27,5 +27,11 @@ Emergency Admissions = CALCULATE([Total Discharges], 'inpatient_discharges'[Type
 -- Final Measure
 % Emergency Admissions = DIVIDE([Emergency Admissions], [Total Discharges], 0)
 
+% Emergency Admissions =
+VAR EmergencyAdmissions =
+    CALCULATE(COUNT(inpatient_discharges[Facility Name]), inpatient_discharges[Type of Admission] = "Emergency")
+VAR TotalAdmissions = COUNT(inpatient_discharges[Facility Name])
+RETURN DIVIDE(EmergencyAdmissions, TotalAdmissions, 0)
+
 7. Creates a dynamic title that reflects the current hospital system selection.
 Selected System = SELECTEDVALUE('inpatient_discharges'[hospital_system], "All Hospital Systems")
